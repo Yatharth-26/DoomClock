@@ -67,5 +67,17 @@ Traditional loops like for and while will not be used for search, filter, and so
 
 ---
 
-## Task Data Structure
-Each task will be stored as an object in local storage in the following format:
+## Technologies Used
+- HTML
+- CSS
+- JavaScript
+- Fetch API
+- Local Storage
+- Array Higher Order Functions
+- GitHub
+- Responsive Web Design
+
+--- 
+
+## Conclusion
+This project helps users manage their tasks and reduce procrastination by tracking deadlines and providing motivational content. It demonstrates practical implementation of JavaScript concepts such as API integration, array higher order functions, local storage, and responsive web design.
