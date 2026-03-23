@@ -79,5 +79,14 @@ Traditional loops like for and while will not be used for search, filter, and so
 
 --- 
 
+## How to Run the Project
+
+1. Clone the repository
+2. Open the project folder
+3. Open index.html in any web browser
+
+---
+
+Or use Live Server in VS Code to run the project.
 ## Conclusion
 This project helps users manage their tasks and reduce procrastination by tracking deadlines and providing motivational content. It demonstrates practical implementation of JavaScript concepts such as API integration, array higher order functions, local storage, and responsive web design.
