@@ -1,5 +1,10 @@
 # DoomClock
 ⏳ A procrastination killer app that uses your life clock and existential dread to make you actually get things done.
+
+## Project Description
+DoomClock is a web application designed to help users reduce procrastination and manage their time more effectively. The application shows a life clock based on the user's birthdate and allows users to add tasks with deadlines, track completed and overdue tasks, and monitor time lost due to procrastination. The application also provides motivational quotes, activity suggestions, and advice using public APIs.
+
+
 ## Objectives of the Project
 The objectives of this project are:
 - To build a web application using HTML, CSS, and JavaScript
