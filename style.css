@@ -1,3 +1,8 @@
+/* =============================================
+   DOOMCLOCK — style.css
+   Poppins font, dark default, fully responsive
+============================================= */
+
 * {
   margin: 0;
   padding: 0;
@@ -5,30 +10,35 @@
   font-family: "Poppins", sans-serif;
 }
 
+/* ---- CSS VARIABLES (Theme System) ---- */
 :root {
-  --bg:       #f4f9ff;
-  --bg2:      #ffffff;
-  --card:     #ffffff;
-  --border:   #dbeafe;
-  --text:     #1e293b;
-  --subtext:  #64748b;
-  --accent:   #ef4444;
-  --accent2:  #3b82f6;
-  --input-bg: #f8fafc;
-  --shadow:   0 4px 20px rgba(0,0,0,0.07);
+  --bg:        #0a0a0a;
+  --bg2:       #111111;
+  --card:      #161616;
+  --border:    #252525;
+  --text:      #f0f0f0;
+  --subtext:   #888888;
+  --accent:    #ef4444;
+  --accent2:   #3b82f6;
+  --green:     #10b981;
+  --yellow:    #f59e0b;
+  --input-bg:  #1e1e1e;
+  --shadow:    0 4px 20px rgba(0,0,0,0.35);
 }
 
-body.dark {
-  --bg:       #0a0a0a;
-  --bg2:      #111111;
-  --card:     #161616;
-  --border:   #252525;
-  --text:     #f0f0f0;
-  --subtext:  #888888;
-  --accent:   #ff3c3c;
-  --accent2:  #3b82f6;
-  --input-bg: #1e1e1e;
-  --shadow:   0 4px 20px rgba(0,0,0,0.4);
+body.light {
+  --bg:        #f4f9ff;
+  --bg2:       #ffffff;
+  --card:      #ffffff;
+  --border:    #dbeafe;
+  --text:      #1e293b;
+  --subtext:   #64748b;
+  --accent:    #ef4444;
+  --accent2:   #3b82f6;
+  --green:     #10b981;
+  --yellow:    #f59e0b;
+  --input-bg:  #f8fafc;
+  --shadow:    0 4px 20px rgba(0,0,0,0.07);
 }
 
 body {
@@ -38,7 +48,7 @@ body {
   min-height: 100vh;
 }
 
-/* ===== NAVBAR ===== */
+/* ---- NAVBAR ---- */
 .navbar {
   background: var(--bg2);
   border-bottom: 1px solid var(--border);
@@ -62,7 +72,6 @@ body {
   font-size: 1.4rem;
   font-weight: 800;
   color: var(--accent);
-  letter-spacing: 0.5px;
   white-space: nowrap;
 }
 
@@ -85,7 +94,7 @@ body {
   background: var(--input-bg);
   color: var(--text);
   border: 1px solid var(--border);
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: 999px;
   font-size: 0.82rem;
   font-weight: 600;
@@ -100,7 +109,7 @@ body {
   border-color: var(--accent);
 }
 
-/* ===== HERO ===== */
+/* ---- HERO ---- */
 .hero {
   max-width: 1100px;
   margin: 0 auto;
@@ -177,7 +186,7 @@ body {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 26px 20px;
+  padding: 28px 20px;
   text-align: center;
   box-shadow: var(--shadow);
   transition: transform 0.2s;
@@ -192,7 +201,7 @@ body {
 }
 
 .clock-label {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--subtext);
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -207,7 +216,7 @@ body {
   font-style: italic;
 }
 
-/* ===== SECTION COMMONS ===== */
+/* ---- SECTION COMMONS ---- */
 .api-section,
 .task-section,
 .graveyard-section {
@@ -228,7 +237,7 @@ body {
 .section-header h2 { font-size: 1.5rem; font-weight: 700; }
 .section-header p   { color: var(--subtext); font-size: 0.88rem; }
 
-/* ===== API CARDS ===== */
+/* ---- API CARDS ---- */
 .api-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -259,18 +268,37 @@ body {
 }
 
 .api-emoji { font-size: 1.5rem; }
+.api-card-top h3 { font-size: 0.95rem; font-weight: 700; }
 
-.api-card-top h3 {
-  font-size: 0.95rem;
-  font-weight: 700;
+/* ---- LOADING INDICATOR ---- */
+.loader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--subtext);
+  font-size: 0.85rem;
+  font-style: italic;
+  min-height: 50px;
 }
 
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border);
+  border-top: 2px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
 .api-text {
-  color: var(--subtext);
+  color: var(--text);
   font-size: 0.9rem;
   line-height: 1.65;
   flex: 1;
-  min-height: 60px;
+  min-height: 50px;
 }
 
 .api-btn {
@@ -293,7 +321,7 @@ body {
   border-color: var(--accent);
 }
 
-/* ===== TASK MANAGER ===== */
+/* ---- TASK MANAGER ---- */
 .streak-badge {
   background: rgba(239,68,68,0.1);
   color: var(--accent);
@@ -301,7 +329,6 @@ body {
   padding: 6px 16px;
   border-radius: 999px;
   font-size: 0.85rem;
-  font-weight: 500;
 }
 
 .add-task-card {
@@ -309,15 +336,15 @@ body {
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 24px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   box-shadow: var(--shadow);
 }
 
 .add-task-card h3 {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  margin-bottom: 16px;
   color: var(--subtext);
+  margin-bottom: 14px;
 }
 
 .task-form {
@@ -346,7 +373,7 @@ body {
 
 .task-form button {
   padding: 11px 22px;
-  background: linear-gradient(to right, var(--accent2), #10b981);
+  background: linear-gradient(to right, var(--accent2), var(--green));
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -360,6 +387,7 @@ body {
 
 .task-form button:hover { opacity: 0.88; }
 
+/* Controls */
 .controls-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -430,7 +458,7 @@ body {
   cursor: pointer;
 }
 
-/* ===== TASK LIST ===== */
+/* ---- TASK LIST ---- */
 .task-list { display: flex; flex-direction: column; gap: 10px; }
 
 .task-card {
@@ -445,7 +473,7 @@ body {
   gap: 12px;
   box-shadow: var(--shadow);
   animation: fadeUp 0.3s ease;
-  transition: transform 0.2s, border-color 0.2s;
+  transition: transform 0.2s;
 }
 
 @keyframes fadeUp {
@@ -455,16 +483,16 @@ body {
 
 .task-card:hover { transform: translateY(-2px); }
 
-.task-card.overdue   { border-left: 4px solid #ef4444; }
-.task-card.completed { border-left: 4px solid #10b981; opacity: 0.6; }
-.task-card.pending   { border-left: 4px solid #f59e0b; }
+.task-card.overdue   { border-left: 4px solid var(--accent); }
+.task-card.completed { border-left: 4px solid var(--green); opacity: 0.6; }
+.task-card.pending   { border-left: 4px solid var(--yellow); }
 
 .task-info { flex: 1; }
 
 .task-name {
   font-size: 0.95rem;
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .task-card.completed .task-name {
@@ -481,6 +509,7 @@ body {
   color: var(--subtext);
 }
 
+/* Badges */
 .badge {
   padding: 2px 10px;
   border-radius: 999px;
@@ -488,31 +517,37 @@ body {
   font-weight: 700;
 }
 
-.badge-High      { background: rgba(239,68,68,0.12);  color: #ef4444; }
-.badge-Medium    { background: rgba(245,158,11,0.12); color: #f59e0b; }
-.badge-Low       { background: rgba(16,185,129,0.12); color: #10b981; }
-.badge-Overdue   { background: rgba(239,68,68,0.12);  color: #ef4444; }
-.badge-Pending   { background: rgba(245,158,11,0.12); color: #f59e0b; }
-.badge-Completed { background: rgba(16,185,129,0.12); color: #10b981; }
+.badge-High      { background: rgba(239,68,68,0.12);   color: var(--accent); }
+.badge-Medium    { background: rgba(245,158,11,0.12);  color: var(--yellow); }
+.badge-Low       { background: rgba(16,185,129,0.12);  color: var(--green);  }
+.badge-Overdue   { background: rgba(239,68,68,0.12);   color: var(--accent); }
+.badge-Pending   { background: rgba(245,158,11,0.12);  color: var(--yellow); }
+.badge-Completed { background: rgba(16,185,129,0.12);  color: var(--green);  }
 
-.task-actions { display: flex; gap: 8px; }
+/* Task Buttons */
+.task-actions { display: flex; gap: 8px; align-items: center; }
 
 .btn-done,
-.btn-delete {
-  padding: 7px 14px;
+.btn-delete,
+.btn-fav {
+  padding: 7px 13px;
   border: none;
   border-radius: 8px;
   font-size: 0.8rem;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, transform 0.15s;
 }
 
-.btn-done   { background: rgba(16,185,129,0.12); color: #10b981; }
-.btn-delete { background: rgba(239,68,68,0.1);   color: #ef4444; }
 .btn-done:hover,
-.btn-delete:hover { opacity: 0.7; }
+.btn-delete:hover,
+.btn-fav:hover { opacity: 0.75; transform: scale(1.05); }
+
+.btn-done   { background: rgba(16,185,129,0.12);  color: var(--green);  }
+.btn-delete { background: rgba(239,68,68,0.1);    color: var(--accent); }
+.btn-fav    { background: rgba(245,158,11,0.12);  color: var(--yellow); font-size: 1rem; padding: 5px 10px; }
+.btn-fav.faved { background: rgba(245,158,11,0.3); }
 
 .empty-msg {
   color: var(--subtext);
@@ -520,7 +555,7 @@ body {
   font-size: 0.88rem;
 }
 
-/* ===== GRAVEYARD ===== */
+/* ---- GRAVEYARD ---- */
 .graveyard-grid {
   display: flex;
   flex-wrap: wrap;
@@ -544,7 +579,7 @@ body {
 .tombstone-name { font-size: 0.85rem; font-weight: 700; color: var(--text); margin: 6px 0 4px; }
 .tombstone-date { font-size: 0.7rem;  color: var(--subtext); }
 
-/* ===== FOOTER ===== */
+/* ---- FOOTER ---- */
 .footer {
   text-align: center;
   padding: 30px 20px;
@@ -554,14 +589,17 @@ body {
   background: var(--bg2);
 }
 
-.foot-sub { font-size: 0.76rem; margin-top: 4px; opacity: 0.6; }
+.foot-sub { font-size: 0.75rem; margin-top: 4px; opacity: 0.6; }
 
-/* ===== RESPONSIVE ===== */
+/* =============================================
+   RESPONSIVE
+============================================= */
+
 @media (max-width: 900px) {
   .hero {
     flex-direction: column;
     padding: 40px 20px;
-    gap: 40px;
+    gap: 36px;
   }
 
   .api-grid { grid-template-columns: 1fr; }
@@ -576,7 +614,13 @@ body {
 }
 
 @media (max-width: 600px) {
-  .clock-grid { grid-template-columns: repeat(2, 1fr); }
+  .nav-inner { padding: 14px 16px; }
+
+  .hero { padding: 30px 16px; }
+
+  .clock-grid { gap: 10px; }
+
+  .clock-num { font-size: 2rem; }
 
   .task-form { grid-template-columns: 1fr; }
   .task-form button { grid-column: span 1; }
@@ -589,6 +633,4 @@ body {
   .api-section,
   .task-section,
   .graveyard-section { padding: 0 16px; }
-
-  .nav-inner { padding: 14px 16px; }
 }
