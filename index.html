@@ -1,44 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DoomClock</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DoomClock — Stop Wasting Time</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <header>
-        <h1>DoomClock</h1>
-        <p>Your time is running out. Use it wisely.</p>
-    </header>
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">☠️ DoomClock</div>
+      <div class="nav-links">
+        <a href="#clock">⏳ Clock</a>
+        <a href="#apis">💡 Inspire</a>
+        <a href="#tasks">📋 Tasks</a>
+        <a href="#graveyard">💀 Graveyard</a>
+      </div>
+      <button class="theme-btn" onclick="toggleTheme()">🌙 Dark</button>
+    </div>
+  </nav>
 
-    <main class="container">
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="clock">
+    <div class="hero-left">
+      <h1 class="hero-title">Your Life Is<br><span class="highlight">Ticking Away</span></h1>
+      <p class="hero-sub">Every second you waste is gone forever.<br>Enter your birthdate and face the truth.</p>
+      <div class="clock-form">
+        <input type="date" id="birthdate" />
+        <button onclick="startClock()">Start My Clock</button>
+      </div>
+    </div>
 
-        <div class="card">
-            <h2>Motivational Quote</h2>
-            <button id="quoteBtn">Get Quote</button>
-            <p id="quote">Click the button to load a quote</p>
+    <div class="hero-right">
+      <div class="clock-grid" id="clock-grid">
+        <div class="clock-card">
+          <div class="clock-num" id="years">--</div>
+          <div class="clock-label">Years</div>
         </div>
-
-        <div class="card">
-            <h2>Random Activity</h2>
-            <button id="activityBtn">Get Activity</button>
-            <p id="activity">Click the button to load an activity</p>
+        <div class="clock-card">
+          <div class="clock-num" id="days">--</div>
+          <div class="clock-label">Days</div>
         </div>
-
-        <div class="card">
-            <h2>Advice</h2>
-            <button id="adviceBtn">Get Advice</button>
-            <p id="advice">Click the button to load advice</p>
+        <div class="clock-card">
+          <div class="clock-num" id="hours">--</div>
+          <div class="clock-label">Hours</div>
         </div>
+        <div class="clock-card">
+          <div class="clock-num" id="seconds">--</div>
+          <div class="clock-label">Seconds</div>
+        </div>
+      </div>
+      <p class="clock-hint">Enter your birthdate to start the clock</p>
+    </div>
+  </section>
 
-    </main>
+  <!-- ========== API SECTION ========== -->
+  <section class="api-section" id="apis">
+    <div class="section-header">
+      <h2>Daily Inspiration</h2>
+      <p>Quotes, activities, and advice to keep you moving</p>
+    </div>
 
-    <footer>
-        <p>DoomClock Project</p>
-    </footer>
+    <div class="api-grid">
 
-    <script src="script.js"></script>
+      <div class="api-card">
+        <div class="api-card-top">
+          <span class="api-emoji">💬</span>
+          <h3>Motivational Quote</h3>
+        </div>
+        <p class="api-text" id="quote">Click below to load a quote.</p>
+        <button class="api-btn" id="quoteBtn">Get Quote</button>
+      </div>
+
+      <div class="api-card">
+        <div class="api-card-top">
+          <span class="api-emoji">⚡</span>
+          <h3>Random Activity</h3>
+        </div>
+        <p class="api-text" id="activity">Click below to get an activity.</p>
+        <button class="api-btn" id="activityBtn">Get Activity</button>
+      </div>
+
+      <div class="api-card">
+        <div class="api-card-top">
+          <span class="api-emoji">😬</span>
+          <h3>Tough Love Advice</h3>
+        </div>
+        <p class="api-text" id="advice">Click below to get advice.</p>
+        <button class="api-btn" id="adviceBtn">Get Advice</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== TASK MANAGER ========== -->
+  <section class="task-section" id="tasks">
+    <div class="section-header">
+      <h2>📋 Task Manager</h2>
+      <div class="streak-badge">🔥 Streak: <strong id="streak-count">0</strong> days</div>
+    </div>
+
+    <!-- Add Task -->
+    <div class="add-task-card">
+      <h3>Add New Task</h3>
+      <div class="task-form">
+        <input type="text"  id="task-input"    placeholder="What needs to be done?" />
+        <input type="date"  id="task-deadline" />
+        <select id="task-priority">
+          <option value="High">🔴 High Priority</option>
+          <option value="Medium">🟡 Medium Priority</option>
+          <option value="Low">🟢 Low Priority</option>
+        </select>
+        <button onclick="addTask()">+ Add Task</button>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-card">
+      <input type="text" class="search-input" id="search-input" placeholder="🔍 Search tasks..." oninput="renderTasks()" />
+      <div class="controls-row">
+        <div class="filter-group">
+          <button class="filter-btn active" id="btn-All"       onclick="setFilter('All')">All</button>
+          <button class="filter-btn"         id="btn-Pending"   onclick="setFilter('Pending')">Pending</button>
+          <button class="filter-btn"         id="btn-Completed" onclick="setFilter('Completed')">Completed</button>
+          <button class="filter-btn"         id="btn-Overdue"   onclick="setFilter('Overdue')">⚠️ Overdue</button>
+        </div>
+        <select class="sort-select" id="sort-select" onchange="renderTasks()">
+          <option value="deadline">Sort: Deadline</option>
+          <option value="priority">Sort: Priority</option>
+          <option value="name">Sort: Name A–Z</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Task List -->
+    <div id="task-list" class="task-list"></div>
+
+  </section>
+
+  <!-- ========== GRAVEYARD ========== -->
+  <section class="graveyard-section" id="graveyard">
+    <div class="section-header">
+      <h2>💀 Procrastination Graveyard</h2>
+      <p>Tasks you let die. A reminder of what procrastination costs.</p>
+    </div>
+    <div id="graveyard-grid" class="graveyard-grid">
+      <p class="empty-msg">No casualties yet. Keep it that way 🫡</p>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <p>☠️ DoomClock — Stop wasting time. Start reclaiming it.</p>
+    <p class="foot-sub">© 2025 DoomClock. Every second counts.</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
