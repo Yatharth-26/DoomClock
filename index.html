@@ -10,7 +10,7 @@
 </head>
 <body>
 
-  <!-- ========== NAVBAR ========== -->
+  <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
     <div class="nav-inner">
       <div class="nav-logo">☠️ DoomClock</div>
@@ -20,11 +20,11 @@
         <a href="#tasks">📋 Tasks</a>
         <a href="#graveyard">💀 Graveyard</a>
       </div>
-      <button class="theme-btn" onclick="toggleTheme()">🌙 Dark</button>
+      <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">☀️ Light</button>
     </div>
   </nav>
 
-  <!-- ========== HERO ========== -->
+  <!-- ===== HERO / LIFE CLOCK ===== -->
   <section class="hero" id="clock">
     <div class="hero-left">
       <h1 class="hero-title">Your Life Is<br><span class="highlight">Ticking Away</span></h1>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="hero-right">
-      <div class="clock-grid" id="clock-grid">
+      <div class="clock-grid">
         <div class="clock-card">
           <div class="clock-num" id="years">--</div>
           <div class="clock-label">Years</div>
@@ -54,11 +54,11 @@
           <div class="clock-label">Seconds</div>
         </div>
       </div>
-      <p class="clock-hint">Enter your birthdate to start the clock</p>
+      <p class="clock-hint" id="clock-hint">Enter your birthdate to start</p>
     </div>
   </section>
 
-  <!-- ========== API SECTION ========== -->
+  <!-- ===== API SECTION ===== -->
   <section class="api-section" id="apis">
     <div class="section-header">
       <h2>Daily Inspiration</h2>
@@ -67,44 +67,60 @@
 
     <div class="api-grid">
 
+      <!-- Quote Card -->
       <div class="api-card">
         <div class="api-card-top">
           <span class="api-emoji">💬</span>
           <h3>Motivational Quote</h3>
         </div>
-        <p class="api-text" id="quote">Click below to load a quote.</p>
-        <button class="api-btn" id="quoteBtn">Get Quote</button>
+        <!-- Loading Indicator -->
+        <div class="loader" id="quote-loader">
+          <div class="spinner"></div>
+          <span>Fetching quote...</span>
+        </div>
+        <p class="api-text" id="quote" style="display:none;"></p>
+        <button class="api-btn" id="quoteBtn">New Quote</button>
       </div>
 
+      <!-- Activity Card -->
       <div class="api-card">
         <div class="api-card-top">
           <span class="api-emoji">⚡</span>
           <h3>Random Activity</h3>
         </div>
-        <p class="api-text" id="activity">Click below to get an activity.</p>
-        <button class="api-btn" id="activityBtn">Get Activity</button>
+        <div class="loader" id="activity-loader">
+          <div class="spinner"></div>
+          <span>Finding activity...</span>
+        </div>
+        <p class="api-text" id="activity" style="display:none;"></p>
+        <button class="api-btn" id="activityBtn">New Activity</button>
       </div>
 
+      <!-- Advice Card -->
       <div class="api-card">
         <div class="api-card-top">
-          <span class="api-emoji">😬</span>
-          <h3>Tough Love Advice</h3>
+          <span class="api-emoji">💡</span>
+          <h3>Daily Advice</h3>
         </div>
-        <p class="api-text" id="advice">Click below to get advice.</p>
+        <div class="loader" id="advice-loader">
+          <div class="spinner"></div>
+          <span>Loading advice...</span>
+        </div>
+        <p class="api-text" id="advice" style="display:none;"></p>
         <button class="api-btn" id="adviceBtn">Get Advice</button>
       </div>
 
     </div>
   </section>
 
-  <!-- ========== TASK MANAGER ========== -->
+  <!-- ===== TASK MANAGER ===== -->
   <section class="task-section" id="tasks">
     <div class="section-header">
       <h2>📋 Task Manager</h2>
       <div class="streak-badge">🔥 Streak: <strong id="streak-count">0</strong> days</div>
     </div>
 
-    <!-- Add Task -->
+    <!-- Add Task Form -->
     <div class="add-task-card">
       <h3>Add New Task</h3>
       <div class="task-form">
@@ -119,20 +135,26 @@
       </div>
     </div>
 
-    <!-- Controls -->
+    <!-- Search, Filter, Sort Controls -->
     <div class="controls-card">
-      <input type="text" class="search-input" id="search-input" placeholder="🔍 Search tasks..." oninput="renderTasks()" />
+
+      <!-- SEARCH (with debouncing in JS) -->
+      <input type="text" class="search-input" id="search-input" placeholder="🔍 Search tasks..." oninput="handleSearch()" />
+
       <div class="controls-row">
+        <!-- FILTER BUTTONS -->
         <div class="filter-group">
           <button class="filter-btn active" id="btn-All"       onclick="setFilter('All')">All</button>
           <button class="filter-btn"         id="btn-Pending"   onclick="setFilter('Pending')">Pending</button>
           <button class="filter-btn"         id="btn-Completed" onclick="setFilter('Completed')">Completed</button>
           <button class="filter-btn"         id="btn-Overdue"   onclick="setFilter('Overdue')">⚠️ Overdue</button>
         </div>
+
+        <!-- SORT -->
         <select class="sort-select" id="sort-select" onchange="renderTasks()">
-          <option value="deadline">Sort: Deadline</option>
+          <option value="deadline">Sort: Deadline ↑</option>
           <option value="priority">Sort: Priority</option>
-          <option value="name">Sort: Name A–Z</option>
+          <option value="name">Sort: Name A-Z</option>
         </select>
       </div>
     </div>
@@ -142,18 +164,18 @@
 
   </section>
 
-  <!-- ========== GRAVEYARD ========== -->
+  <!-- ===== GRAVEYARD ===== -->
   <section class="graveyard-section" id="graveyard">
     <div class="section-header">
       <h2>💀 Procrastination Graveyard</h2>
-      <p>Tasks you let die. A reminder of what procrastination costs.</p>
+      <p>Overdue tasks you deleted. A reminder of what procrastination costs.</p>
     </div>
     <div id="graveyard-grid" class="graveyard-grid">
       <p class="empty-msg">No casualties yet. Keep it that way 🫡</p>
     </div>
   </section>
 
-  <!-- ========== FOOTER ========== -->
+  <!-- ===== FOOTER ===== -->
   <footer class="footer">
     <p>☠️ DoomClock — Stop wasting time. Start reclaiming it.</p>
     <p class="foot-sub">© 2025 DoomClock. Every second counts.</p>
