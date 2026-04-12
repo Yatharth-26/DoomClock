@@ -1,14 +1,4 @@
-// =============================================
-// DOOMCLOCK — script.js
-// Milestone 2: fetch API + loading states
-// Milestone 3: search, filter, sort (HOFs),
-//              dark mode, button interactions,
-//              local storage, debouncing
-// =============================================
-
-
-// ============ DARK / LIGHT MODE ============
-// Milestone 3: Dark Mode / Light Mode toggle
+// DARK / LIGHT MODE 
 
 function toggleTheme() {
   var btn = document.getElementById("theme-btn");
@@ -31,7 +21,7 @@ if (localStorage.getItem("theme") === "light") {
 }
 
 
-// ============ LIFE CLOCK ============
+// LIFE CLOCK 
 
 var clockInterval;
 
@@ -65,7 +55,7 @@ function startClock() {
 }
 
 
-// ============ API HELPER FUNCTIONS ============
+// API HELPER FUNCTIONS 
 // These show/hide the loading spinner and text for each card
 
 function showLoader(loaderId, textId) {
@@ -79,10 +69,7 @@ function hideLoader(loaderId, textId) {
 }
 
 
-// ============ FETCH QUOTE ============
-// Milestone 2: API call using fetch + loading state
-// API: https://dummyjson.com/quotes/random
-// Returns: { quote: "...", author: "..." }
+// FETCH QUOTE 
 
 async function getQuote() {
   showLoader("quote-loader", "quote");
@@ -99,9 +86,7 @@ async function getQuote() {
 }
 
 
-// ============ FETCH ACTIVITY ============
-// API: https://www.themealdb.com/api/json/v1/1/random.php
-// Returns: { meals: [{ strMeal: "...", strCategory: "..." }] }
+// FETCH ACTIVITY 
 
 async function getActivity() {
   showLoader("activity-loader", "activity");
@@ -120,10 +105,7 @@ async function getActivity() {
 }
 
 
-// ============ FETCH ADVICE ============
-// API: https://api.adviceslip.com/advice
-// Returns: { slip: { advice: "..." } }
-// Date.now() prevents browser from caching the same result
+// FETCH ADVICE 
 
 async function getAdvice() {
   showLoader("advice-loader", "advice");
@@ -145,10 +127,8 @@ document.getElementById("activityBtn").addEventListener("click", getActivity);
 document.getElementById("adviceBtn").addEventListener("click", getAdvice);
 
 
-// =============================================
+
 // TASK MANAGER
-// Milestone 3: search, filter, sort using HOFs
-// =============================================
 
 var tasks         = [];
 var graveyard     = [];
@@ -157,7 +137,7 @@ var streak        = 0;
 var favorites     = [];   // stores IDs of favorited tasks
 
 
-// ---- ADD TASK ----
+// ADD TASK 
 function addTask() {
   var name     = document.getElementById("task-input").value.trim();
   var deadline = document.getElementById("task-deadline").value;
@@ -184,7 +164,7 @@ function addTask() {
 }
 
 
-// ---- HELPER: Is a task overdue? ----
+// Is task overdue
 function isOverdue(task) {
   if (task.completed) return false;
   var today    = new Date();
@@ -193,8 +173,7 @@ function isOverdue(task) {
   return deadline < today;
 }
 
-
-// ---- HELPER: Get task status ----
+// Get task status 
 function getStatus(task) {
   if (task.completed) return "Completed";
   if (isOverdue(task)) return "Overdue";
@@ -202,9 +181,7 @@ function getStatus(task) {
 }
 
 
-// ---- COMPLETE A TASK ----
-// Milestone 3: Button Interaction
-// Uses HOF: map()
+// COMPLETE A TASK 
 
 function completeTask(id) {
   tasks = tasks.map(function (task) {
@@ -221,14 +198,14 @@ function completeTask(id) {
 }
 
 
-// ---- TOGGLE FAVORITE ----
-// Milestone 3: Button Interaction (like/favorite)
+//  TOGGLE FAVORITE 
+
 
 function toggleFavorite(id) {
   var isFaved = favorites.includes(id);
 
   if (isFaved) {
-    // HOF: filter() — remove from favorites
+    // filter() — remove from favorites
     favorites = favorites.filter(function (favId) { return favId !== id; });
   } else {
     favorites.push(id);
@@ -239,8 +216,7 @@ function toggleFavorite(id) {
 }
 
 
-// ---- DELETE A TASK ----
-// Uses HOF: filter()
+// DELETE A TASK 
 
 function deleteTask(id) {
   var task = tasks.find(function (t) { return t.id === id; });
@@ -257,8 +233,7 @@ function deleteTask(id) {
 }
 
 
-// ---- SET ACTIVE FILTER ----
-// Milestone 3: Filtering
+//  SET ACTIVE FILTER 
 
 function setFilter(filter) {
   currentFilter = filter;
@@ -272,10 +247,7 @@ function setFilter(filter) {
 }
 
 
-// ---- DEBOUNCED SEARCH ----
-// Bonus: Debouncing — waits 300ms after user stops typing before searching
-// This prevents calling renderTasks on every single keystroke
-
+//  DEBOUNCED SEARCH 
 var searchTimeout;
 
 function handleSearch() {
@@ -285,22 +257,17 @@ function handleSearch() {
   }, 300);
 }
 
-
-// ---- RENDER TASKS ----
-// Main display function
-// Milestone 3: Uses HOFs — filter(), sort(), map()
-
 function renderTasks() {
   var searchValue = document.getElementById("search-input").value.toLowerCase();
   var sortBy      = document.getElementById("sort-select").value;
   var taskList    = document.getElementById("task-list");
 
-  // HOF 1: filter() — Search by keyword
+  //  filter() — Search by keyword
   var result = tasks.filter(function (task) {
     return task.name.toLowerCase().includes(searchValue);
   });
 
-  // HOF 2: filter() — Filter by status
+  //  filter() — Filter by status
   result = result.filter(function (task) {
     if (currentFilter === "All")       return true;
     if (currentFilter === "Completed") return task.completed === true;
@@ -309,7 +276,7 @@ function renderTasks() {
     return true;
   });
 
-  // HOF 3: sort() — Sort by chosen option
+  //  sort() — Sort by chosen option
   result = result.sort(function (a, b) {
     if (sortBy === "deadline") {
       return new Date(a.deadline) - new Date(b.deadline);
@@ -329,7 +296,7 @@ function renderTasks() {
     return;
   }
 
-  // HOF 4: map() — Build a card for each task
+  // map() — Build a card for each task
   taskList.innerHTML = result.map(function (task) {
     var status   = getStatus(task);
     var isFaved  = favorites.includes(task.id);
@@ -358,8 +325,6 @@ function renderTasks() {
   }).join("");
 }
 
-
-// ---- GRAVEYARD ----
 function renderGraveyard() {
   var el = document.getElementById("graveyard-grid");
 
@@ -368,7 +333,7 @@ function renderGraveyard() {
     return;
   }
 
-  // HOF: map() — build a tombstone for each dead task
+  // map() — build a tombstone for each dead task
   el.innerHTML = graveyard.map(function (task) {
     return (
       '<div class="tombstone">' +
@@ -381,7 +346,7 @@ function renderGraveyard() {
 }
 
 
-// ---- LOCAL STORAGE ----
+// LOCAL STORAGE
 // Bonus: Local Storage — saves tasks and graveyard across sessions
 
 function saveTasks() {
@@ -399,7 +364,7 @@ function loadData() {
 }
 
 
-// ============ INIT — runs on page load ============
+// INIT — runs on page load 
 loadData();
 renderTasks();
 renderGraveyard();
